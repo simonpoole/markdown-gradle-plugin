@@ -37,10 +37,10 @@ class MarkdownWorkerImpl implements MarkdownWorker {
                 File destinationParentDir = outputDirFor(file, sourceDir.absolutePath, outputDir)
                 if (conversion.accept(file)) {
                     String input = file.getText(inputEncoding)
-                    String output = conversion.convert(input, configuration)
+                    String output = conversion.convert(input, options, configuration)
                     File target = new File("${destinationParentDir}/${stripFilenameExtension(file.name)}${conversion.targetExtension()}")
                     target.withWriter(outputEncoding) { w -> w.write(output) }
-                } else {
+                } else if (!conversion.dontCopy(file)){
                     File target = new File("${destinationParentDir}/${file.name}")
                     target.withOutputStream { it << file.newInputStream() }
                 }

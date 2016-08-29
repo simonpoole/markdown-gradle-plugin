@@ -18,6 +18,8 @@ package org.kordamp.gradle.markdown
 import com.overzealous.remark.Options
 import com.overzealous.remark.Remark
 import org.pegdown.PegDownProcessor
+import groovy.text.SimpleTemplateEngine
+import groovy.text.Template
 
 import java.util.concurrent.locks.ReentrantLock
 
@@ -57,14 +59,21 @@ class MarkdownProcessor {
      * @param conf If provided, creates a custom pegdown with unique settings just for this instance
      * @return HTML-formatted text
      */
-    String markdownToHtml(String text, Map conf = [:]) {
+    String markdownToHtml(String text, Map<String, Object> options, Map conf = [:]) {
         // lazily created, so we call the method directly
         PegDownProcessor p = getProcessor(conf)
         String result = ''
         // we have to lock, because pegdown is not thread-safe<
         try {
             processorLock.lock()
-            result = p.markdownToHtml((String) text, new MarkdownToHtmlLinkRenderer() )
+            try {
+				SimpleTemplateEngine engine = new SimpleTemplateEngine()
+				Template template = engine.createTemplate(new File(options.sourceDir.absolutePath+'/'+'template.tpl'))
+   		 		Map<String,String> data = [body:p.markdownToHtml((String) text, new MarkdownToHtmlLinkRenderer() )]
+				result = template.make(data)
+            } catch (FileNotFoundException fnfex) {
+				result = p.markdownToHtml((String) text, new MarkdownToHtmlLinkRenderer() )
+            }
         } finally {
             processorLock.unlock()
         }
@@ -82,8 +91,8 @@ class MarkdownProcessor {
      * @param conf If provided, creates a custom remark with unique settings just for this instance
      * @return Markdown-formatted text
      */
-    @SuppressWarnings('DuplicateStringLiteral')
-    String htmlToMarkdown(String text, Map conf = [:]) {
+    @SuppressWarnings(['DuplicateStringLiteral', 'UnusedMethodParameter'])
+    String htmlToMarkdown(String text, Map options, Map conf = [:]) {
         // lazily created, so we call the method directly
         Remark r = getRemark(conf)
         String customBaseUri = baseUri ?: ''

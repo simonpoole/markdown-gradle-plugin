@@ -25,9 +25,11 @@ enum Conversion {
     private static final String MD_EXTENSION = '.md'
     private static final String HTML_EXTENSION = '.html'
     private static final String MARKDOWN_EXTENSION = '.markdown'
+	private static final String TEMPLATE_EXTENSION = '.tpl'
 
     private final String methodName
     private final List<String> extensions = []
+	private final List<String> dontCopyExt = [TEMPLATE_EXTENSION]
     private final String targetExtension
     private final MarkdownProcessor processor = new MarkdownProcessor()
 
@@ -43,6 +45,13 @@ enum Conversion {
         }
         false
     }
+	
+	boolean dontCopy(File file) {
+		for (String ext : dontCopyExt) {
+			if (file.name.endsWith(ext)) return true
+		}
+		false
+	}
 
     @SuppressWarnings('ConfusingMethodName')
     String targetExtension() {
@@ -54,8 +63,8 @@ enum Conversion {
         extensions
     }
 
-    String convert(String input, Map configuration) {
-        processor."$methodName"(input, configuration)
+    String convert(String input, Map options, Map configuration) {
+        processor."$methodName"(input, options, configuration)
     }
 
     /**

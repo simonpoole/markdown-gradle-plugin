@@ -102,12 +102,14 @@ publishing {
     }
 }
 
-if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = ''
-if (!project.hasProperty('bintrayKey')) ext.bintrayKey = ''
+//if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = ''
+//if (!project.hasProperty('bintrayKey')) ext.bintrayKey = ''
 
 bintray {
-    user = bintrayUsername
-    key = bintrayKey
+//    user = bintrayUsername
+//    key = bintrayKey
+	user = System.getenv('BINTRAY_USER')
+	key = System.getenv('BINTRAY_KEY')
     publications = ['mavenJava']
     pkg {
         userOrg = 'aalmiray'
