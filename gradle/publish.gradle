@@ -112,8 +112,8 @@ bintray {
 	key = System.getenv('BINTRAY_KEY')
     publications = ['mavenJava']
     pkg {
-        userOrg = 'aalmiray'
-        repo = 'markdown'
+        // userOrg = 'aalmiray'
+        repo = 'div'
         name = 'markdown-gradle-plugin'
         desc = project.project_description
         licenses = ['Apache-2.0']

@@ -1,18 +1,15 @@
 Markdown Gradle Plugin
 -------------------------
 
-[![Travis Build Status](http://img.shields.io/travis/aalmiray/markdown-gradle-plugin.svg)](https://travis-ci.org/aalmiray/markdown-gradle-plugin)
-[![Coverage Status](http://img.shields.io/coveralls/aalmiray/markdown-gradle-plugin.svg)](https://coveralls.io/r/aalmiray/markdown-gradle-plugin)
-[![Bintray](https://api.bintray.com/packages/aalmiray/kordamp/markdown-gradle-plugin/images/download.svg)](https://bintray.com/aalmiray/kordamp/markdown-gradle-plugin)
-
-
 This plugin provides a facility for converting markdown into HTML, as well as
 converting HTML back into markdown. It is based on the [grails-markdown][]
 plugin by Ted Naleid.
 
+This version is a fork of org.kordamp:markdown-gradle-plugin using Flexmark and allowing for a template to be specified. Currently this is still WIP but should work in principle, options handling needs some more work.
+
 See [Daring Fireball][] for syntax basics.
 
-This plugin makes use of the [Pegdown][] and [Remark][] libraries.
+This plugin makes use of the [Flexmark][] and [Remark][] libraries.
 
 Installation
 ------------
@@ -22,13 +19,13 @@ Use the following snippet
     buildscript {
         repositories {
             jcenter()
-            maven { url 'http://dl.bintray.com/content/aalmiray/kordamp' }
+            maven { url 'https://dl.bintray.com/simonpoole/gradle/' }
         }
         dependencies {
-            classpath 'org.kordamp:markdown-gradle-plugin:1.0.0'
+            classpath 'ch.poole.gradle:markdown-gradle-plugin:0.1.0'
         }
     }
-    apply plugin: 'org.kordamp.markdown.convert'
+    apply plugin: 'ch.poole.gradle.markdown'
 
 
 Usage
@@ -151,7 +148,7 @@ Example HTML:
     [smart: true]                          // Custom Map
 
 Enables conversion of simple quotes and punctuation into HTML entities and back
-again, such as converting `"Foo"` into `“Foo”`, or `---` into `—`.
+again, such as converting `"Foo"` into `â€œFooâ€�`, or `---` into `â€”`.
 
 #### Fenced Code Blocks ####
 
@@ -220,6 +217,12 @@ The base URI is used when converting relative links.
 
 Setting it to `false` will simply remove relative links.
 
+#### Template ####
+
+     markdoenToHtml.template = 'test.tpl'
+    
+Generated HTML will be included in to the body of the template.
+
 #### Customize Pegdown ####
 
     markdownToHtml.customizePegdown = { int extensions -> ... }
@@ -238,6 +241,10 @@ not necessarily at startup.
 
 History
 -------
+
+### 0.1 
+
+Fork of original plugin
 
 ### 1.0.0
 
