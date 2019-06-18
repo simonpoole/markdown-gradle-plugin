@@ -113,7 +113,7 @@ bintray {
     publications = ['mavenJava']
     pkg {
         // userOrg = 'aalmiray'
-        repo = 'div'
+        repo = 'gradle'
         name = 'markdown-gradle-plugin'
         desc = project.project_description
         licenses = ['Apache-2.0']
@@ -123,7 +123,7 @@ bintray {
         vcsUrl = project.project_vcs
         publicDownloadNumbers = true
         version {
-            attributes = ['gradle-plugin': 'org.kordamp.markdown.convert:org.kordamp:markdown-gradle-plugin ']
+            attributes = ['gradle-plugin': 'ch.poole.markdown.convert:ch.poole.gradle:markdown-gradle-plugin ']
         }
     }
 }
@@ -136,7 +136,7 @@ pluginBundle {
 
     plugins {
         markdownPlugin {
-            id = 'org.kordamp.markdown.convert'
+            id = 'ch.poole.markdown.convert'
             displayName = 'Markdown Gradle Plugin'
         }
     }
