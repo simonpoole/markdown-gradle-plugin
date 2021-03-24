@@ -62,6 +62,7 @@ def pomConfig = {
         [
             aalmiray : 'Andres Almiray',
             tednaleid: 'Ted Naleid',
+            simonpoole: 'Simon Poole'
         ].each { devId, devName ->
             developer {
                 id devId
@@ -90,7 +91,6 @@ def pomConfig = {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java
             artifact sourcesJar
             artifact javadocJar
 
@@ -98,34 +98,25 @@ publishing {
                 asNode().children().last() + pomConfig
                 asNode().appendNode('description', project.project_description)
             }
+            
+            repositories {
+                maven {
+                    name = 'sonatype'
+                    credentials {
+                        username ossrhUsername
+                        password ossrhPassword
+                    }
+                    def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                    def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                    url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                }
+            }
         }
     }
 }
 
-//if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = ''
-//if (!project.hasProperty('bintrayKey')) ext.bintrayKey = ''
-
-bintray {
-//    user = bintrayUsername
-//    key = bintrayKey
-	user = System.getenv('BINTRAY_USER')
-	key = System.getenv('BINTRAY_KEY')
-    publications = ['mavenJava']
-    pkg {
-        // userOrg = 'aalmiray'
-        repo = 'gradle'
-        name = 'markdown-gradle-plugin'
-        desc = project.project_description
-        licenses = ['Apache-2.0']
-        labels = ['markdown']
-        websiteUrl = project.project_website
-        issueTrackerUrl = project.project_issues
-        vcsUrl = project.project_vcs
-        publicDownloadNumbers = true
-        version {
-            attributes = ['gradle-plugin': 'ch.poole.markdown.convert:ch.poole.gradle:markdown-gradle-plugin ']
-        }
-    }
+signing {
+    sign publishing.publications.mavenJava
 }
 
 pluginBundle {

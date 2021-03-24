@@ -24,7 +24,6 @@
  }
  
 plugins {
-    id 'com.jfrog.bintray' version '1.8.1'
     id 'com.github.hierynomus.license' version '0.14.0'
     id 'net.nemerosa.versioning' version '2.7.1'
     id 'com.github.ben-manes.versions' version '0.20.0'
@@ -33,11 +32,11 @@ plugins {
     id 'idea'
     id 'groovy'
     id 'maven-publish'
+    id 'signing'
 }
 
 apply from: 'gradle/code-coverage.gradle'
 apply from: 'gradle/code-quality.gradle'
-apply from: 'gradle/publish.gradle'
 
 apply plugin: 'eclipse'
 
@@ -45,7 +44,6 @@ apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 repositories {
-    maven { url 'http://dl.bintray.com/content/aalmiray/kordamp' }
     mavenCentral()
     jcenter()
 }
@@ -55,7 +53,7 @@ dependencies {
     compile 'com.overzealous:remark:1.1.0'
     compile 'org.jsoup:jsoup:1.11.3'
     compile 'org.apache.commons:commons-lang3:3.7'
-    compile 'com.vladsch.flexmark:flexmark-all:0.42.10'
+    compile 'com.vladsch.flexmark:flexmark-all:0.50.44'
     testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
@@ -104,9 +102,11 @@ task javadocJar(type: Jar) {
 jar.finalizedBy sourcesJar
 jar.finalizedBy javadocJar
 
+apply from: 'gradle/publish.gradle'
+
 artifacts {
     sourcesJar
     javadocJar
 }
 
-task publishRelease(dependsOn: [bintrayUpload, publishPlugins]) {}
+task publishRelease(dependsOn: [publishPlugins]) {}

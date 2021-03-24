@@ -5,7 +5,7 @@ This plugin provides a facility for converting markdown into HTML, as well as
 converting HTML back into markdown. It is based on the [grails-markdown][]
 plugin by Ted Naleid.
 
-This version is a fork of org.kordamp:markdown-gradle-plugin using Flexmark and allowing for a template to be specified. Currently this is still WIP but should work in principle, options handling needs some more work.
+This version is a fork of org.kordamp:markdown-gradle-plugin using Flexmark instead of Pegdown and allowing for a template to be specified. Currently this is still WIP but should work in principle, options handling needs some more work.
 
 See [Daring Fireball][] for syntax basics.
 
@@ -18,11 +18,10 @@ Use the following snippet
 
     buildscript {
         repositories {
-            jcenter()
-            maven { url 'https://dl.bintray.com/simonpoole/gradle/' }
+            mavenCentral()
         }
         dependencies {
-            classpath 'ch.poole.gradle:markdown-gradle-plugin:0.1.0'
+            classpath 'ch.poole.gradle:markdown-gradle-plugin:0.2.2'
         }
     }
     apply plugin: 'ch.poole.gradle.markdown'
@@ -219,7 +218,7 @@ Setting it to `false` will simply remove relative links.
 
 #### Template ####
 
-     markdoenToHtml.template = 'test.tpl'
+     markdownToHtml.template = 'test.tpl'
     
 Generated HTML will be included in to the body of the template.
 
@@ -242,6 +241,14 @@ not necessarily at startup.
 History
 -------
 
+### 0.2.2
+
+Publish on sonatype / maven central
+
+### 0.2
+
+Switch to Flexmark
+
 ### 0.1 
 
 Fork of original plugin
@@ -262,7 +269,7 @@ Fork of original plugin
 
 [grails-markdown]: http://grails.org/plugin/markdown
 [Daring Fireball]: http://daringfireball.net/projects/markdown/basics
-[Pegdown]: http://pegdown.org
+[Flexmark]: https://github.com/vsch/flexmark-java
 [Remark]: http://remark.overzealous.com/manual/index.html
 [Markdown Extra]: http://michelf.com/projects/php-markdown/extra/
 [Multimarkdown]: http://fletcher.github.com/peg-multimarkdown/#tables
