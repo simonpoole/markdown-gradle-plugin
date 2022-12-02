@@ -18,6 +18,7 @@ package ch.poole.gradle.markdown
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
@@ -52,7 +53,7 @@ class MarkdownToHtmlTask extends DefaultTask {
     @Optional @Input Closure customizePegdown
     @Optional @Input Closure customizeRemark
 
-    MarkdownWorker worker
+    @Internal MarkdownWorker worker
 
     MarkdownToHtmlTask() {
         sourceDir = project.file('src/markdown')

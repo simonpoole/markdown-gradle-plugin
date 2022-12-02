@@ -18,6 +18,7 @@ package ch.poole.gradle.markdown
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
@@ -35,7 +36,7 @@ class HtmlToMarkdownTask extends DefaultTask {
     @Optional @Input String inputEncoding = StandardCharsets.UTF_8.displayName()
     @Optional @Input String outputEncoding = StandardCharsets.UTF_8.displayName()
 
-    MarkdownWorker worker
+    @Internal MarkdownWorker worker
 
     HtmlToMarkdownTask() {
         sourceDir = project.file('src/html')
