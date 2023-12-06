@@ -13,21 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
- buildscript {
-     repositories {
-         jcenter()
-     }
-     dependencies {
-         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
-     }
- }
  
 plugins {
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'com.github.hierynomus.license' version '0.14.0'
     id 'net.nemerosa.versioning' version '2.7.1'
     id 'com.github.ben-manes.versions' version '0.20.0'
-    id 'com.gradle.plugin-publish' version '0.10.0'
+    id 'com.gradle.plugin-publish' version '0.21.0'
     id 'com.github.kt3k.coveralls' version '2.8.2'
     id 'idea'
     id 'groovy'
@@ -49,16 +41,16 @@ repositories {
 }
 
 dependencies {
-    compile gradleApi()
-    compile 'com.overzealous:remark:1.1.0'
-    compile 'org.jsoup:jsoup:1.11.3'
-    compile 'org.apache.commons:commons-lang3:3.7'
-    compile 'com.vladsch.flexmark:flexmark-all:0.50.44'
-    testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
+    implementation gradleApi()
+    implementation 'com.overzealous:remark:1.1.0'
+    implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'org.apache.commons:commons-lang3:3.7'
+    implementation 'com.vladsch.flexmark:flexmark-all:0.50.44'
+    testImplementation('org.spockframework:spock-core:1.0-groovy-2.4') {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
     }
-    testCompile 'cglib:cglib-nodep:3.2.8'
+    testImplementation 'cglib:cglib-nodep:3.2.8'
 }
 
 test {
@@ -88,14 +80,14 @@ tasks.withType(GroovyCompile) {
 task sourcesJar(type: Jar) {
     group 'Build'
     description 'An archive of the source code'
-    classifier 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar) {
     group 'Build'
     description 'An archive of the javadoc'
-    classifier 'javadoc'
+    archiveClassifier = 'javadoc'
     from javadoc.destinationDir
 }
 
