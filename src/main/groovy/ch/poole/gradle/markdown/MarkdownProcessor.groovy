@@ -21,8 +21,8 @@ import com.vladsch.flexmark.profiles.pegdown.Extensions
 import com.vladsch.flexmark.profiles.pegdown.PegdownOptionsAdapter
 import com.vladsch.flexmark.util.ast.Document
 import com.vladsch.flexmark.util.data.DataHolder
-import com.overzealous.remark.Options
-import com.overzealous.remark.Remark
+import ch.poole.div.remark.Options
+import ch.poole.div.remark.Remark
 import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
 
