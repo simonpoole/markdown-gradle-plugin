@@ -17,10 +17,12 @@ package ch.poole.gradle.markdown
 
 import com.vladsch.flexmark.html.HtmlRenderer
 import com.vladsch.flexmark.parser.Parser
-import com.vladsch.flexmark.profiles.pegdown.Extensions
-import com.vladsch.flexmark.profiles.pegdown.PegdownOptionsAdapter
+import com.vladsch.flexmark.profile.pegdown.Extensions
+import com.vladsch.flexmark.profile.pegdown.PegdownOptionsAdapter
 import com.vladsch.flexmark.util.ast.Document
 import com.vladsch.flexmark.util.data.DataHolder
+import com.vladsch.flexmark.util.data.DataSet
+import com.vladsch.flexmark.util.data.MutableDataSet
 import ch.poole.div.remark.Options
 import ch.poole.div.remark.Remark
 import groovy.text.SimpleTemplateEngine
@@ -59,8 +61,14 @@ class MarkdownProcessor {
     @SuppressWarnings(['UnusedMethodParameter'])
     String markdownToHtml(String text, Map<String, Object> options, Map conf = [:]) {
 
-        DataHolder opts = PegdownOptionsAdapter.flexmarkOptions(pegdownExtensions)
-
+        DataHolder opts = PegdownOptionsAdapter.flexmarkOptions(pegdownExtensions)  
+        if (conf.headerIds) {
+            DataSet headerIdOpts = new MutableDataSet()
+            headerIdOpts.set(HtmlRenderer.RENDER_HEADER_ID, true)
+            headerIdOpts.set(HtmlRenderer.GENERATE_HEADER_ID, true)
+            opts = DataSet.merge(opts, headerIdOpts)
+        }
+        
         parser = Parser.builder(opts).build()
         renderer = HtmlRenderer.builder(opts).build()
         String result = ''
@@ -157,7 +165,7 @@ class MarkdownProcessor {
     // conf can be set via any map-like object
     @SuppressWarnings(['Instanceof', 'AbcMetric'])
     private static Map getConfigurations(Map conf) {
-        Map result = [remarkOptions: Options.pegdownBase(), pegdownExtensions: 0, baseUri: null, template: null]
+        Map result = [remarkOptions: Options.pegdownBase(), pegdownExtensions: 0, baseUri: null, template: null, headerIds: false]
 
         if (conf) {
             def all = conf.all as Boolean
@@ -217,6 +225,10 @@ class MarkdownProcessor {
 
             if (conf.template) {
                 result.template = conf.template
+            }
+            
+            if (conf.headerIds) {
+                result.headerIds = conf.headerIds
             }
         }
 

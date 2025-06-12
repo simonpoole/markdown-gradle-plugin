@@ -222,6 +222,12 @@ Setting it to `false` will simply remove relative links.
     
 Generated HTML will be included in to the body of the template.
 
+#### Header Ids ####
+
+    markdownToHtml.headerIds = true 
+    
+Generated HTML headers will include an id (lower case version of heading, spaces replaced with underscores).   
+
 #### Customize Pegdown ####
 
     markdownToHtml.customizePegdown = { int extensions -> ... }

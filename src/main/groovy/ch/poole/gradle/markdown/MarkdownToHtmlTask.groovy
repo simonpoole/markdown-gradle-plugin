@@ -48,6 +48,7 @@ class MarkdownToHtmlTask extends DefaultTask {
     @Optional @Input Boolean all
     @Optional @Input Boolean removeHtml
     @Optional @Input Boolean removeTables
+    @Optional @Input Boolean headerIds
     @Optional @Input String baseUri
     @Optional @Input String template
     @Optional @Input Closure customizePegdown
@@ -103,6 +104,7 @@ class MarkdownToHtmlTask extends DefaultTask {
         if (removeTables != null) config.removeTables = removeTables
         if (baseUri != null) config.baseUri = baseUri
         if (template != null) config.template = template
+        if (headerIds != null) config.headerIds = headerIds
         if (customizePegdown != null) config.customizePegdown = customizePegdown
         if (customizeRemark != null) config.customizeRemark = customizeRemark
 

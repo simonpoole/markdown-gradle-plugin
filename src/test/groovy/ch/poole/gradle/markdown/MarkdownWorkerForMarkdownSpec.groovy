@@ -64,4 +64,23 @@ class MarkdownWorkerForMarkdownSpec extends Specification {
 
         sampleOutput.text.contains('href="http://acme.com"')
     }
+    
+    def "Renders simple HTML with custom configuration enabling header ids"() {
+        when:
+        Map configuration = [
+            headerIds: true
+        ]
+        MarkdownWorker worker = new MarkdownWorkerImpl()
+        worker.process(Conversion.MARKDOWN, [sourceDir: sourceDir, outputDir: outputDir], configuration)
+
+        then:
+        !outputDir.list().toList().isEmpty()
+        outputDir.list().toList().contains('sample.html')
+
+        File sampleOutput = new File(outputDir, 'sample.html')
+        sampleOutput.exists()
+        sampleOutput.length() > 0
+
+        sampleOutput.text.contains('id="a_header"')
+    }
 }

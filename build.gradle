@@ -45,7 +45,7 @@ dependencies {
     implementation 'ch.poole.div:remark:1.2.0'
     implementation 'org.jsoup:jsoup:1.18.1'
     implementation 'org.apache.commons:commons-lang3:3.15.0'
-    implementation 'com.vladsch.flexmark:flexmark-all:0.50.44'
+    implementation 'com.vladsch.flexmark:flexmark-all:0.64.8'
     testImplementation('org.spockframework:spock-core:2.3-groovy-3.0') {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
         exclude group: 'org.hamcrest', module: 'hamcrest-core'
